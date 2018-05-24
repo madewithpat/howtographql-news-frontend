@@ -5,11 +5,18 @@ import App from "./components/App";
 import registerServiceWorker from "./registerServiceWorker";
 import { ApolloProvider } from "react-apollo";
 import { ApolloClient } from "apollo-client";
-import { httpLink } from "apollo-link-http";
+import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
+// This creates the link to the graphql API
+// For local development, it will be 'http://localhost:400'
+// This should probably be offloaded into an environment variable,
+// or dotenv file, so that it can be adjusted with CI/CD
 const httpLink = new HttpLink({ uri: "http://localhost:4000" });
 
+// Here we're instantiating the client,
+// and injecting the API endpoint (httpLink)
+// as well as a new cache
 const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache()
